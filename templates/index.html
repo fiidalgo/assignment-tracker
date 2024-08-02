@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Task Manager</h1>
+    
+    <input type="text" id="search-box" placeholder="Search tasks...">
+    <button id="view-all-button">View All</button>
+    
+    <ul id="task-list">
+        {% for task in tasks %}
+        <li class="task-item">
+            {{ task.assignment_name }} - {{ task.class_name }} - {{ task.due_date }}
+            <form action="/delete/{{ task.id }}" method="POST" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+            <a href="/update/{{ task.id }}">Update</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <form action="/add" method="POST">
+        <input type="text" name="assignment_name" placeholder="Assignment Name" required>
+        <input type="text" name="class_name" placeholder="Class Name" required>
+        <input type="date" name="due_date" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
